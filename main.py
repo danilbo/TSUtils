@@ -35,7 +35,7 @@ class Data():
     interfaces: []
 
 
-@app.get("/api/v1/getData")
+@app.get("/api/v1/system")
 async def getData():
 
     data = jsonable_encoder(Data())

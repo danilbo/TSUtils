@@ -73,7 +73,7 @@ var postId = 1;
 // logic to get new data
 var getData = function () {
 $.ajax({
-  url: '/api/v1/getData',
+  url: '/api/v1/system',
   success: function (data) {
     // process your data to pull out what you plan to use to update the chart
     // e.g. new label and a new data point
