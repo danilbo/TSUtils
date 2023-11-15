@@ -69,7 +69,7 @@ var ctx_live = document.getElementById("internetChartRecv");
 var internetChartRecv = new Chart(ctx_live, {
 type: 'bar',
 data: {
-  labels: [],
+  labels: ["Recv"],
   datasets: []
 },
 options: {
@@ -114,30 +114,22 @@ $.ajax({
     let interfacesMap = createNewDatasets(data.interfaces,internetChartSent, true);
     
     let array = [];
-//    let labels = [];
     for (let element of interfacesMap.values()) {
       array.push(element);
-//      labels.push(element.label)
     }
 
     internetChartSent.data.datasets = array;
-//    internetChartSent.data.labels = labels;
 
     // re-render the chart
     internetChartSent.update();
 
     let interfacesMap2 = createNewDatasets(data.interfaces,internetChartRecv, false);
 
-    //internetChartSent.data.labels.push(postId++);
-
     let array2 = [];
-    let labels2 = [];
     for (let element of interfacesMap.values()) {
       array2.push(element);
-      labels2.push(element.label)
     }
     internetChartRecv.data.datasets = array2;
-    internetChartRecv.data.labels = labels2;
 
     // re-render the chart
     internetChartRecv.update();
@@ -153,8 +145,6 @@ for (let i = 0; i < chart.data.datasets.length; i++) {
   let currentDataset = chart.data.datasets[i];
   interfaceMap.set(currentDataset.label, currentDataset);
 }
-// console.log("tmpInterfaces size: " + interfaceMap.size)
-// console.log("inputList length: " + inputList.length)
 
 for (let i = 0; i < inputList.length; i++) {
   let currentInterface = inputList[i];
