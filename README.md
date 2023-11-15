@@ -15,7 +15,8 @@ Monitoring interface for Linux (Ubuntu) host
 
 # Rest Service  
 
-![image](https://github.com/danilbo/TSUtils/assets/61252751/0ac73a46-722d-470b-83bb-afa398c532a6)  
+![image](https://github.com/danilbo/TSUtils/assets/61252751/d7cdcc9b-8357-4bbf-93ab-4f2dd79bf82f)
+  
 
 # Testing with Postman  
 
