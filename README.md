@@ -5,7 +5,7 @@ Monitoring interface for Linux (Ubuntu) host
 - Create web page to represent the Linux host data by making time-based charts calling the API every 5 seconds.  
 # Usage  
 - Install Python 3.x with Pip  
-- Install fastAPI following the instructions from https://fastapi.tiangolo.com/tutorial/first-steps/  
+- Install fastAPI following the instructions from [https://fastapi.tiangolo.com/tutorial/](https://fastapi.tiangolo.com/tutorial/)  
 - To run application: ` uvicorn main:app --reload `  
 - Open in browser  http://localhost:8000/static/index.html  
 # The resulting webpage  
