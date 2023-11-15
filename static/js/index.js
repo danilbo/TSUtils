@@ -6,13 +6,11 @@ data: {
   labels: [],
   datasets: [{
     data: [],
-    borderWidth: 3,
     borderColor: '#00c0ef',
     label: 'CPU usage',
   },
   {
     data: [],
-    borderWidth: 3,
     borderColor: '#FF0000',
     label: 'Memory usage',
   }
@@ -26,13 +24,6 @@ options: {
   },
   legend: {
     display: false
-  },
-  scales: {
-    yAxes: [{
-      ticks: {
-        beginAtZero: true,
-      }
-    }]
   }
 }
 });
@@ -53,13 +44,6 @@ options: {
   },
   legend: {
     display: false
-  },
-  scales: {
-    yAxes: [{
-      ticks: {
-        beginAtZero: true,
-      }
-    }]
   }
 }
 });
@@ -80,13 +64,6 @@ options: {
   },
   legend: {
     display: false
-  },
-  scales: {
-    yAxes: [{
-      ticks: {
-        beginAtZero: true,
-      }
-    }]
   }
 }
 });
