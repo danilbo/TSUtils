@@ -23,7 +23,7 @@ class InternetInterface:
 
 class Data():
     def __init__(self):
-        self.cpuLoad = psutil.cpu_percent(interval=1)
+        self.cpuLoad = psutil.cpu_percent(interval=5)
         self.memory = psutil.virtual_memory().percent
         self.interfaces = []
         for interface, data in psutil.net_io_counters(pernic=True).items():
