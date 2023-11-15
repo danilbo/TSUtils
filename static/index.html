@@ -7,13 +7,25 @@
   }
 </style>
 
+<H1>Perfomance</H1>
+
 <div>
   <canvas id="performanceChart"></canvas>
 </div>
 
+<H1>Packets Sent</H1>
+
 <div>
-  <canvas id="internetChart"></canvas>
+  <canvas id="internetChartSent"></canvas>
 </div>
+
+<H1>Packets Recv</H1>
+
+<div>
+  <canvas id="internetChartRecv"></canvas>
+</div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -60,8 +72,35 @@
   });
 
   // create initial empty chart
-  var ctx_live = document.getElementById("internetChart");
-  var internetChart = new Chart(ctx_live, {
+  var ctx_live = document.getElementById("internetChartSent");
+  var internetChartSent = new Chart(ctx_live, {
+    type: 'bar',
+    data: {
+      labels: [],
+      datasets: []
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+        text: "Chart.js - Dynamically Update Chart Via Ajax Requests",
+      },
+      legend: {
+        display: false
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }]
+      }
+    }
+  });
+
+    // create initial empty chart
+    var ctx_live = document.getElementById("internetChartRecv");
+  var internetChartRecv = new Chart(ctx_live, {
     type: 'bar',
     data: {
       labels: [],
@@ -101,55 +140,80 @@
         performanceChart.data.datasets[0].data.push(data.cpuLoad);
         performanceChart.data.datasets[1].data.push(data.memory);
 
+        // re-render the chart
         performanceChart.update();
 
 
-        let interfacesMap = createNewDatasets(data.interfaces);
-        //internetChart.data.labels.push(postId++);
+        let interfacesMap = createNewDatasets(data.interfaces,internetChartSent, true);
+        
         let array = [];
         let labels = [];
         for (let element of interfacesMap.values()) {
           array.push(element);
           labels.push(element.label)
         }
-        internetChart.data.datasets = array;
-        internetChart.data.labels = labels;
+
+        internetChartSent.data.datasets = array;
+        internetChartSent.data.labels = labels;
+        
+        // re-render the chart
+        internetChartSent.update();
+        
+        let interfacesMap2 = createNewDatasets(data.interfaces,internetChartRecv, false);
+        
+        //internetChartSent.data.labels.push(postId++);
+
+        let array2 = [];
+        let labels2 = [];
+        for (let element of interfacesMap.values()) {
+          array2.push(element);
+          labels2.push(element.label)
+        }
+        internetChartRecv.data.datasets = array2;
+        internetChartRecv.data.labels = labels2;
 
         // re-render the chart
-        internetChart.update();
+        internetChartRecv.update();
+
       }
     });
   }
 
-  var createNewDatasets = function (inputList) {
-    let tmpInterfaces = new Map();
+  var createNewDatasets = function (inputList, chart, isSent) {
+    let interfaceMap = new Map();
 
-    for (let i = 0; i < internetChart.data.datasets.length; i++) {
-      let currentDataset = internetChart.data.datasets[i];
-      tmpInterfaces.set(currentDataset.label, currentDataset);
+    for (let i = 0; i < chart.data.datasets.length; i++) {
+      let currentDataset = chart.data.datasets[i];
+      interfaceMap.set(currentDataset.label, currentDataset);
     }
-    console.log("tmpInterfaces size: " + tmpInterfaces.size)
+    console.log("tmpInterfaces size: " + interfaceMap.size)
     console.log("inputList length: " + inputList.length)
 
     for (let i = 0; i < inputList.length; i++) {
       let currentInterface = inputList[i];
-      console.log("currentInterface.label: " + currentInterface.label);
-      if (tmpInterfaces.has(currentInterface.label)) {
-        tmpInterfaces.get(currentInterface.label).data[0] = currentInterface.sent;
-      } else {
 
-        let tmpNewInterface = {
+      if (interfaceMap.has(currentInterface.label)) {
+        interfaceMap.get(currentInterface.label).data[0] = isSent ? currentInterface.sent :
+        currentInterface.recv;
+      } else {
+        let interface = isSent ?
+        {
           data: [currentInterface.sent],
           label: currentInterface.label
-        };
-        console.log(tmpNewInterface);
-        //if (tmpNewInterface.data > 0) {
-          tmpInterfaces.set(currentInterface.label, tmpNewInterface);
-        //}
+        }
+        :
+        {
+          data: [currentInterface.recv],
+          label: currentInterface.label
+        }
+        ;
+
+        interfaceMap.set(currentInterface.label, interface);
       }
     }
-    return tmpInterfaces;
+    return interfaceMap;
   };
+
 
 
 
